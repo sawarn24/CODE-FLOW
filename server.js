@@ -102,7 +102,37 @@ app.get('/api/me', (req, res) => {
     }
     res.json(req.session.user);
   });
+
+
+const FormData = require('./models/FormData');
+
+app.post('/submit-form', async (req, res) => {
+  try {
+    const formEntry = new FormData(req.body);
+    await formEntry.save();
+    res.send('Form submitted successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error saving form');
+  }
+});
+
   
+app.get('/api/user-info', (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: 'Not logged in' });
+    }
+    res.json(req.session.user);
+  });
+  
+
+app.get('/form', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  res.sendFile(path.join(__dirname, 'public/form.html'));
+});
+
 
 app.listen(3000, () => {
   console.log('🚀 Server running at http://localhost:3000');

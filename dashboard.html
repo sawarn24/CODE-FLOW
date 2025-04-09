@@ -599,7 +599,7 @@
     <div class="hero-section">
       <h1>Elevate Your Brand's Story</h1>
       <p>Create powerful marketing materials that capture attention and drive results — all from one intelligent platform.</p>
-      <button class="cta-button" onclick="window.location.href='/form.html'">
+      <button class="cta-button" onclick="window.location.href='/form'">
         <span>Start Creating Now</span>
         <i class="fas fa-rocket"></i>
       </button>
@@ -743,6 +743,21 @@
         // Redirect to login if session expired
         window.location.href = '/login.html';
       });
-  </script>  
+  </script>
+  <script>
+    let currentUser = null;
+  
+    fetch('/api/user-info')
+      .then(res => res.json())
+      .then(data => {
+        currentUser = data;
+        console.log("Logged in as:", currentUser); // 👀 Confirm this logs something
+      })
+      .catch(() => {
+        alert('You are not logged in');
+        window.location.href = '/login';
+      });
+  </script>
+  
 </body>
 </html>

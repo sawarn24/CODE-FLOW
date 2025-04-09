@@ -452,7 +452,7 @@
       <img src="/profile.jpg" alt="BrandSpark Logo">
       <h2>BrandSpark</h2>
     </div>
-    <div class="profile-menu">
+    <div id="user-profile" class="profile-menu">
       <button class="profile-button">
         <img src="/profile.jpg" alt="Profile">
         <span>John Doe</span>
@@ -484,7 +484,7 @@
         <p>Fill in the details below to generate professional marketing content for your business.</p>
       </div>
       
-      <form id="contentForm" action="dashboard.html" method="GET">
+      <form id="form" action="dashboard.html" method="GET">
         <div class="form-group">
           <label for="businessName">Business Name</label>
           <span class="hint">For branding in generated content</span>
@@ -565,19 +565,19 @@
           <span class="hint">What content do you want to make?</span>
           <div class="checkbox-group">
             <div class="checkbox-item">
-              <input type="checkbox" id="flyer" name="platform" value="flyer">
+              <input type="checkbox" id="flyer" name="platformFocus" value="flyer">
               <label for="flyer">Flyer</label>
             </div>
             <div class="checkbox-item">
-              <input type="checkbox" id="email" name="platform" value="email">
+              <input type="checkbox" id="email" name="platformFocus" value="email">
               <label for="email">Email</label>
             </div>
             <div class="checkbox-item">
-              <input type="checkbox" id="socialPost" name="platform" value="socialPost">
+              <input type="checkbox" id="socialPost" name="platformFocus" value="socialPost">
               <label for="socialPost">Social Post</label>
             </div>
             <div class="checkbox-item">
-              <input type="checkbox" id="description" name="platform" value="description" checked>
+              <input type="checkbox" id="description" name="platformFocus" value="description" checked>
               <label for="description">Description</label>
             </div>
           </div>
@@ -617,5 +617,84 @@
       </button>
     </div>
   </div>
+  <script>
+    document.getElementById('form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const platformFocus = Array.from(document.querySelectorAll('input[name="platformFocus"]:checked'))
+    .map(cb => cb.value);
+
+  const formData = {
+    businessName: document.getElementById('businessName').value,
+    businessType: document.getElementById('businessType').value,
+    businessCategory: document.getElementById('businessCategory').value,
+    location: document.getElementById('location').value,
+    businessTone: document.getElementById('businessTone').value,
+    offer: document.getElementById('offer').value,
+    targetAudience: document.getElementById('targetAudience').value,
+    platformFocus: platformFocus,
+
+    // 👇 Add these from window.currentUser
+    userId: window.currentUser?.id,
+    userEmail: window.currentUser?.email
+  };
+
+  // Optional console log
+  console.log("Submitting:", formData);
+
+  const response = await fetch('/submit-form', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  });
+
+  const resultText = await response.text();
+  alert(resultText);
+});
+  </script>
+
+  <script>
+    let currentUser = null;
+  
+    // Fetch user info
+    fetch('/api/user-info')
+      .then(res => res.json())
+      .then(data => {
+        currentUser = data;
+        console.log("Logged in user:", currentUser);
+      })
+      .catch(() => {
+        alert('You are not logged in');
+        window.location.href = '/login'; // force redirect if user is not logged in
+      });
+  </script>
+  <script>
+    fetch('/api/user-info')
+      .then(res => {
+        if (!res.ok) {
+          window.location.href = '/login';
+          return;
+        }
+        return res.json();
+      })
+      .then(user => {
+        if (!user) return;
+  
+        // Show profile in UI
+        const userProfile = document.getElementById('user-profile');
+        userProfile.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px; background: #4f46e5; padding: 8px 12px; border-radius: 12px; color: white;">
+            <img src="/profile.jpg" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+            <span>${user.name || 'User'}</span>
+          </div>
+        `;
+        // Save user globally for later use
+        window.currentUser = user;
+      });
+  </script>
+  
+  
 </body>
 </html>
