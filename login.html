@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – BrandSpark</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --primary-dark: #2980b9;
+      --bg-gradient-start: #74ebd5;
+      --bg-gradient-end: #ACB6E5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .login-banner {
+      background: var(--primary-color);
+      flex-basis: 45%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjtvcGFjaXR5OjAuMTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjAsMjBINDBWNDBIMjBWMjBabTIwLDIwSDYwVjYwSDQwVjQwWm0yMCwyMEg4MFY4MEg2MFY2MFptMjAsMjBIMTAwVjEwMEg4MFY4MFoiLz48L3N2Zz4=');
+      background-size: cover;
+      position: relative;
+    }
+
+    .login-banner h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .login-banner p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .features {
+      list-style: none;
+    }
+
+    .features li {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .features i {
+      margin-right: 10px;
+      background: rgba(255,255,255,0.2);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-form {
+      flex-basis: 55%;
+      background: white;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .login-header h2 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-header h2 i {
+      margin-right: 10px;
+      background: var(--primary-color);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .login-header p {
+      color: #777;
+      font-size: 0.95rem;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background: white;
+      padding: 0 5px;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      border: 1px solid #e1e1e1;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      background-color: #fff;
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin: -15px 0 20px;
+    }
+
+    .forgot-password a {
+      color: var(--primary-color);
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-btn i {
+      margin-left: 10px;
+    }
+
+    .login-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .text-center {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .text-center a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .social-login {
+      margin-top: 30px;
+    }
+
+    .social-login p {
+      position: relative;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .social-login p::before,
+    .social-login p::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #e1e1e1;
+    }
+
+    .social-login p::before {
+      left: 0;
+    }
+
+    .social-login p::after {
+      right: 0;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f5f5f5;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .social-icons a.google:hover {
+      background-color: #DB4437;
+      color: white;
+    }
+
+    .social-icons a.twitter:hover {
+      background-color: #1DA1F2;
+      color: white;
+    }
+
+    .social-icons a.facebook:hover {
+      background-color: #4267B2;
+      color: white;
+    }
+
+    .alert {
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alert i {
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+
+    .alert.error {
+      background-color: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
+
+    @media (max-width: 992px) {
+      .login-container {
+        max-width: 95%;
+        flex-direction: column;
+      }
+      
+      .login-banner, .login-form {
+        flex-basis: auto;
+      }
+      
+      .login-banner {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .login-form {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-banner">
+      <h1><i class="fas fa-bolt"></i> BrandSpark</h1>
+      <p>Transform your marketing with our AI-powered content creation platform. Easily create compelling content for all your business needs.</p>
+      <ul class="features">
+        <li><i class="fas fa-check"></i> Create stunning content in seconds</li>
+        <li><i class="fas fa-check"></i> Tailored to your brand voice</li>
+        <li><i class="fas fa-check"></i> SEO optimized content</li>
+        <li><i class="fas fa-check"></i> Save time and resources</li>
+      </ul>
+    </div>
+    
+    <div class="login-form">
+      <div class="login-header">
+        <h2><i class="fas fa-bolt"></i> BrandSpark</h2>
+        <p>Log in to your account to continue</p>
+      </div>
+
+      
+      <div class="alert error" id="errorAlert" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage">Invalid credentials. Please try again.</span>
+      </div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" name="email" placeholder="Your email address" required autocomplete="off" />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" name="password" placeholder="Your password" required autocomplete="new-password" />
+        </div>
+        
+        <div class="forgot-password">
+          <a href="#">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="login-btn">
+          Login to your account
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="text-center">
+        Don't have an account? <a href="register.html">Create one now</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+  
+      try {
+        const res = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+  
+        if (res.redirected) {
+          // ✅ Follow the redirect to /dashboard/:id
+          window.location.href = res.url;
+        } else {
+          document.getElementById('errorAlert').style.display = 'flex';
+          const errorText = await res.text();
+          document.getElementById('errorMessage').textContent = errorText || 'Invalid credentials. Please try again.';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        document.getElementById('errorAlert').style.display = 'flex';
+        document.getElementById('errorMessage').textContent = 'Something went wrong. Please try again.';
+      }
+    });
+  </script>  
+</body>
+</html>

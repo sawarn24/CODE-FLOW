@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register – BrandSpark</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --primary-dark: #2980b9;
+      --bg-gradient-start: #74ebd5;
+      --bg-gradient-end: #ACB6E5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+    }
+
+    .register-container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .register-banner {
+      background: var(--primary-color);
+      flex-basis: 45%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjtvcGFjaXR5OjAuMTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjAsMjBINDBWNDBIMjBWMjBabTIwLDIwSDYwVjYwSDQwVjQwWm0yMCwyMEg4MFY4MEg2MFY2MFptMjAsMjBIMTAwVjEwMEg4MFY4MFoiLz48L3N2Zz4=');
+      background-size: cover;
+      position: relative;
+    }
+
+    .register-banner h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .register-banner p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .benefits {
+      list-style: none;
+    }
+
+    .benefits li {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .benefits i {
+      margin-right: 10px;
+      background: rgba(255,255,255,0.2);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-form {
+      flex-basis: 55%;
+      background: white;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .register-header h2 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-header h2 i {
+      margin-right: 10px;
+      background: var(--primary-color);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .register-header p {
+      color: #777;
+      font-size: 0.95rem;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background: white;
+      padding: 0 5px;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      border: 1px solid #e1e1e1;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      background-color: #fff;
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .register-btn i {
+      margin-left: 10px;
+    }
+
+    .register-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .register-btn:active {
+      transform: translateY(0);
+    }
+
+    .text-center {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .text-center a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .alert {
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alert i {
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+
+    .alert.error {
+      background-color: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
+
+    .password-requirements {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: -15px;
+      margin-bottom: 20px;
+      padding-left: 45px;
+    }
+
+    .password-requirements ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .password-requirements li {
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-requirements li i {
+      margin-right: 5px;
+      font-size: 0.7rem;
+    }
+
+    @media (max-width: 992px) {
+      .register-container {
+        max-width: 95%;
+        flex-direction: column;
+      }
+      
+      .register-banner, .register-form {
+        flex-basis: auto;
+      }
+      
+      .register-banner {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .register-form {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <div class="register-banner">
+      <h1><i class="fas fa-bolt"></i> BrandSpark</h1>
+      <p>Join thousands of marketers who are transforming their content creation with our AI-powered platform.</p>
+      <ul class="benefits">
+        <li><i class="fas fa-rocket"></i> Get started in minutes</li>
+        <li><i class="fas fa-shield-alt"></i> Secure and private</li>
+        <li><i class="fas fa-sync"></i> Free updates</li>
+        <li><i class="fas fa-headset"></i> Premium support</li>
+      </ul>
+    </div>
+    
+    <div class="register-form">
+      <div class="register-header">
+        <h2><i class="fas fa-bolt"></i> BrandSpark</h2>
+        <p>Create your account</p>
+      </div>
+
+      <div class="alert error" id="errorAlert" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage"></span>
+      </div>
+
+      <form id="registerForm" autocomplete="off">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <i class="fas fa-user"></i>
+          <input type="text" id="name" name="name" placeholder="Your full name" required autocomplete="off" />
+        </div>
+        
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" name="email" placeholder="Your email address" required autocomplete="off" />
+        </div>
+        
+        <div class="input-group">
+          <label for="password">Password</label>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password" />
+        </div>
+        
+        <div class="password-requirements">
+          <ul>
+            <li><i class="fas fa-check"></i> At least 8 characters</li>
+            <li><i class="fas fa-check"></i> Include numbers and special characters</li>
+          </ul>
+        </div>
+        
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required autocomplete="new-password" />
+        </div>
+        
+        <button type="submit" class="register-btn">
+          Create Your Account
+          <i class="fas fa-user-plus"></i>
+        </button>
+      </form>
+
+      <div class="text-center">
+        Already have an account? <a href="login.html">Log in</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+  
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+  
+      try {
+        const res = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, confirmPassword })
+        });
+  
+        // ✅ If registration is successful and there's a redirect
+        if (res.redirected) {
+          window.location.href = res.url;
+        } else {
+          const msg = await res.text();
+          document.getElementById('errorAlert').style.display = 'block';
+          document.getElementById('errorMessage').textContent = msg;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('errorAlert').style.display = 'block';
+        document.getElementById('errorMessage').textContent = 'Something went wrong. Please try again.';
+      }
+    });
+  </script>    
+</body>
+</html>
