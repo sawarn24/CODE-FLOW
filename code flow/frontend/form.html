@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Content – BrandSpark</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #10b981;
+      --secondary-dark: #059669;
+      --accent: #f72585;
+      --text: #2d3748;
+      --text-light: #64748b;
+      --bg-light: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-light);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      color: var(--white);
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 10;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+    
+    .logo img {
+      width: 36px;
+      height: 36px;
+    }
+
+    .profile-menu {
+      position: relative;
+    }
+
+    .profile-button {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .profile-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    .profile-button img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 120%;
+      background-color: var(--white);
+      min-width: 280px;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      border-radius: 16px;
+      overflow: hidden;
+      animation: fadeIn 0.2s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-header {
+      background: linear-gradient(to right, #e2e8f0, #f8fafc);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .user-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      border: 3px solid white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      object-fit: cover;
+    }
+    
+    .user-header h3 {
+      margin: 0;
+      color: var(--text);
+    }
+    
+    .user-header p {
+      margin: 4px 0 0;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .dropdown-content a {
+      color: var(--text);
+      padding: 14px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background-color 0.2s;
+    }
+    
+    .dropdown-content a i {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f5f9;
+    }
+    
+    .dropdown-content .danger {
+      color: #ef4444;
+    }
+    
+    .dropdown-content .danger i {
+      color: #ef4444;
+    }
+    
+    .dropdown-divider {
+      height: 1px;
+      background-color: #e2e8f0;
+      margin: 0;
+    }
+
+    .profile-menu:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .form-container {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+      margin-bottom: 60px;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .form-header h1 {
+      font-size: 2.4rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .form-header p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .form-group .hint {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: var(--bg-light);
+      color: var(--text);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: var(--bg-light);
+      color: var(--text);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d3748' width='18px' height='18px'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .checkbox-item {
+      flex: 1 0 calc(50% - 16px);
+      min-width: 150px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background-color: var(--bg-light);
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-item:hover {
+      background-color: #f1f5f9;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+    }
+
+    .checkbox-item label {
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .secondary-button {
+      padding: 16px 30px;
+      font-size: 1rem;
+      background: var(--white);
+      color: var(--text);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .secondary-button:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .primary-button {
+      padding: 16px 36px;
+      font-size: 1.1rem;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+    }
+
+    .primary-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(67, 97, 238, 0.35);
+    }
+    
+    .primary-button:active {
+      transform: translateY(0);
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: var(--white);
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: center;
+      padding: 16px 0;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+      z-index: 10;
+    }
+    
+    .tool-buttons {
+      display: flex;
+      gap: 16px;
+      max-width: 1000px;
+      width: 100%;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    .tool-button {
+      background: var(--white);
+      color: var(--text);
+      border: 1px solid #e2e8f0;
+      padding: 14px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 140px;
+      justify-content: center;
+    }
+    
+    .tool-button i {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .tool-button:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    
+    .tool-button.active {
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+    
+    .tool-button.active i {
+      color: var(--white);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+      
+      .form-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .checkbox-item {
+        flex: 1 0 100%;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .action-buttons button {
+        width: 100%;
+      }
+      
+      .tool-buttons {
+        overflow-x: auto;
+        justify-content: start;
+        padding-bottom: 5px;
+      }
+      
+      .tool-button {
+        white-space: nowrap;
+        min-width: 120px;
+      }
+      
+      .main-content {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="/api/placeholder/36/36" alt="BrandSpark Logo">
+      <h2>BrandSpark</h2>
+    </div>
+    <div class="profile-menu">
+      <button class="profile-button">
+        <img src="/api/placeholder/100/100" alt="Profile">
+        <span>John Doe</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <div class="user-header">
+          <img src="/api/placeholder/150/150" alt="John Doe" class="user-avatar">
+          <h3>John Doe</h3>
+          <p>Marketing Manager</p>
+        </div>
+        <a href="#"><i class="fas fa-user"></i> My Profile</a>
+        <a href="#"><i class="fas fa-envelope"></i> Messages <span style="background: var(--accent); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; margin-left: auto;">3</span></a>
+        <a href="#"><i class="fas fa-cog"></i> Account Settings</a>
+        <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+        <div class="dropdown-divider"></div>
+        <a href="#"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="danger"><i class="fas fa-trash-alt"></i> Delete Account</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="form-container">
+      <div class="form-header">
+        <h1>Create Your Content</h1>
+        <p>Fill in the details below to generate professional marketing content for your business.</p>
+      </div>
+      
+      <form id="contentForm" action="dashboard.html" method="GET">
+        <div class="form-group">
+          <label for="businessName">Business Name</label>
+          <span class="hint">For branding in generated content</span>
+          <input type="text" id="businessName" name="businessName" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="businessType">Business Type</label>
+          <span class="hint">Helps decide tone and templates (e.g., café, gym, salon)</span>
+          <select id="businessType" name="businessType" class="form-select" required>
+            <option value="" disabled selected>Select a business type</option>
+            <option value="cafe">Café / Restaurant</option>
+            <option value="retail">Retail Store</option>
+            <option value="salon">Salon / Spa</option>
+            <option value="gym">Gym / Fitness</option>
+            <option value="tech">Tech / Software</option>
+            <option value="consulting">Consulting / Professional Services</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="education">Education</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="businessCategory">Business Category (Optional)</label>
+          <span class="hint">More specific if needed (e.g., fitness, food, fashion)</span>
+          <select id="businessCategory" name="businessCategory" class="form-select">
+            <option value="" selected>Select a category (optional)</option>
+            <option value="fitness">Fitness</option>
+            <option value="food">Food & Beverage</option>
+            <option value="fashion">Fashion & Apparel</option>
+            <option value="beauty">Beauty & Cosmetics</option>
+            <option value="electronics">Electronics & Gadgets</option>
+            <option value="home">Home & Furniture</option>
+            <option value="health">Health & Wellness</option>
+            <option value="education">Education & Training</option>
+            <option value="finance">Finance & Insurance</option>
+            <option value="travel">Travel & Hospitality</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="location">Location / City</label>
+          <span class="hint">For local trend matching / geo-based wording</span>
+          <input type="text" id="location" name="location" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="businessTone">Business Tone / Vibe</label>
+          <span class="hint">Controls writing style (e.g., fun, cozy, professional)</span>
+          <select id="businessTone" name="businessTone" class="form-select" required>
+            <option value="" disabled selected>Select tone</option>
+            <option value="professional">Professional & Formal</option>
+            <option value="friendly">Friendly & Approachable</option>
+            <option value="casual">Casual & Relaxed</option>
+            <option value="fun">Fun & Playful</option>
+            <option value="luxurious">Luxurious & Premium</option>
+            <option value="minimalist">Minimalist & Modern</option>
+            <option value="warm">Warm & Cozy</option>
+            <option value="bold">Bold & Confident</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="offer">Offer / Promo</label>
+          <span class="hint">For campaigns: "20% off", "Grand Opening", "Buy 1 Get 1"</span>
+          <input type="text" id="offer" name="offer" class="form-control">
+        </div>
+        
+        <div class="form-group">
+          <label for="targetAudience">Target Audience</label>
+          <span class="hint">Optional: teens, parents, working pros, etc. (for better AI)</span>
+          <input type="text" id="targetAudience" name="targetAudience" class="form-control">
+        </div>
+        
+        <div class="form-group">
+          <label>Platform Focus</label>
+          <span class="hint">What content do you want to make?</span>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="flyer" name="platform" value="flyer">
+              <label for="flyer">Flyer</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="email" name="platform" value="email">
+              <label for="email">Email</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="socialPost" name="platform" value="socialPost">
+              <label for="socialPost">Social Post</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="description" name="platform" value="description" checked>
+              <label for="description">Description</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button type="button" class="secondary-button" onclick="window.location.href='dashboard.html'">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Dashboard</span>
+          </button>
+          <button type="submit" class="primary-button">
+            <span>Generate Content</span>
+            <i class="fas fa-magic"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="tool-buttons">
+      <button class="tool-button">
+        <i class="fas fa-file-alt"></i>
+        <span>Flyer</span>
+      </button>
+      <button class="tool-button">
+        <i class="fas fa-envelope"></i>
+        <span>Email</span>
+      </button>
+      <button class="tool-button active">
+        <i class="fas fa-edit"></i>
+        <span>Description</span>
+      </button>
+      <button class="tool-button">
+        <i class="fas fa-hashtag"></i>
+        <span>Social Post</span>
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>

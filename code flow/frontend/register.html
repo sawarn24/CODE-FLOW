@@ -6,128 +6,468 @@
   <title>Register – BrandSpark</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <style>
+    :root {
+      --primary-color: #2ecc71;
+      --primary-dark: #27ae60;
+      --bg-gradient-start: #74ebd5;
+      --bg-gradient-end: #ACB6E5;
+    }
+
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      background: linear-gradient(to right, #ACB6E5, #74ebd5);
+      margin: 0;
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      color: #333;
     }
 
-    .register-box {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 12px;
+    .register-container {
       width: 100%;
-      max-width: 380px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 900px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
     }
 
-    .register-box h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #2ecc71;
+    .register-banner {
+      background: var(--primary-color);
+      flex-basis: 45%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjtvcGFjaXR5OjAuMTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjAsMjBINDBWNDBIMjBWMjBabTIwLDIwSDYwVjYwSDQwVjQwWm0yMCwyMEg4MFY4MEg2MFY2MFptMjAsMjBIMTAwVjEwMEg4MFY4MFoiLz48L3N2Zz4=');
+      background-size: cover;
+      position: relative;
     }
 
-    .tagline {
-      text-align: center;
-      font-size: 14px;
-      color: #777;
+    .register-banner h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .register-banner p {
+      font-size: 1.1rem;
+      opacity: 0.9;
       margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .benefits {
+      list-style: none;
+    }
+
+    .benefits li {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .benefits i {
+      margin-right: 10px;
+      background: rgba(255,255,255,0.2);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-form {
+      flex-basis: 55%;
+      background: white;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .register-header h2 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-header h2 i {
+      margin-right: 10px;
+      background: var(--primary-color);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .register-header p {
+      color: #777;
+      font-size: 0.95rem;
     }
 
     .input-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       position: relative;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background: white;
+      padding: 0 5px;
+      font-size: 0.8rem;
+      color: #777;
     }
 
     .input-group input {
       width: 100%;
-      max-width: 320px;
-      padding: 12px 15px 12px 40px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 15px 15px 15px 45px;
+      border: 1px solid #e1e1e1;
+      border-radius: 10px;
       outline: none;
-      font-size: 14px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
       background-color: #f9f9f9;
-      display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+      background-color: #fff;
     }
 
     .input-group i {
       position: absolute;
-      top: 12px;
-      left: 12px;
-      color: #2ecc71;
-      font-size: 14px;
+      top: 15px;
+      left: 15px;
+      color: var(--primary-color);
+      font-size: 1rem;
     }
 
-    .btn {
+    .register-btn {
       width: 100%;
-      max-width: 320px;
-      padding: 12px;
-      background-color: #2ecc71;
+      padding: 14px;
+      background-color: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .btn:hover {
-      background-color: #27ae60;
+    .register-btn i {
+      margin-left: 10px;
+    }
+
+    .register-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .register-btn:active {
+      transform: translateY(0);
     }
 
     .text-center {
       text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: #777;
     }
 
     .text-center a {
-      color: #2ecc71;
+      color: var(--primary-color);
       text-decoration: none;
       font-weight: bold;
     }
 
-    input:-webkit-autofill {
-      box-shadow: 0 0 0 30px #f9f9f9 inset !important;
-      -webkit-text-fill-color: #333 !important;
+    .social-register {
+      margin-top: 30px;
+    }
+
+    .social-register p {
+      position: relative;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .social-register p::before,
+    .social-register p::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #e1e1e1;
+    }
+
+    .social-register p::before {
+      left: 0;
+    }
+
+    .social-register p::after {
+      right: 0;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f5f5f5;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .social-icons a.google:hover {
+      background-color: #DB4437;
+      color: white;
+    }
+
+    .social-icons a.twitter:hover {
+      background-color: #1DA1F2;
+      color: white;
+    }
+
+    .social-icons a.facebook:hover {
+      background-color: #4267B2;
+      color: white;
+    }
+
+    .alert {
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alert i {
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+
+    .alert.error {
+      background-color: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
+
+    .alert.success {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    @media (max-width: 992px) {
+      .register-container {
+        max-width: 95%;
+        flex-direction: column;
+      }
+      
+      .register-banner, .register-form {
+        flex-basis: auto;
+      }
+      
+      .register-banner {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .register-form {
+        padding: 40px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="register-box">
-    <h2><i class="fas fa-user-plus"></i> BrandSpark</h2>
-    <div class="tagline">Ignite your business with instant, stunning content</div>
-    <form method="POST" action="/register/" autocomplete="off">
+  <div class="register-container">
+    <div class="register-banner">
+      <h1><i class="fas fa-bolt"></i> BrandSpark</h1>
+      <p>Join thousands of businesses creating amazing content in seconds with our AI-powered platform.</p>
+      <ul class="benefits">
+        <li><i class="fas fa-check"></i> Free account setup</li>
+        <li><i class="fas fa-check"></i> No credit card required</li>
+        <li><i class="fas fa-check"></i> Access to basic templates</li>
+        <li><i class="fas fa-check"></i> 24/7 customer support</li>
+      </ul>
+    </div>
+    
+    <div class="register-form">
+      <div class="register-header">
+        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+        <p>Get started with your free BrandSpark account</p>
+      </div>
 
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" placeholder="Full Name" name="fullname" required />
+      <!-- Alert Box -->
+      <div class="alert error" id="errorAlert" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage">Error message will appear here.</span>
       </div>
-      <div class="input-group">
-        <i class="fas fa-envelope"></i>
-        <input type="email" placeholder="Email" name="email" required />
+
+      <!-- Success Alert -->
+      <div class="alert success" id="successAlert" style="display: none;">
+        <i class="fas fa-check-circle"></i>
+        <span id="successMessage">Registration successful!</span>
       </div>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" placeholder="Password" name="password" required />
+
+      <!-- Registration Form -->
+      <form id="registerForm" autocomplete="off">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <i class="fas fa-user"></i>
+          <input type="text" id="name" name="name" placeholder="Your full name" required autocomplete="off" />
+        </div>
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" name="email" placeholder="Your email address" required autocomplete="off" />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password" />
+        </div>
+        
+        <button type="submit" class="register-btn">
+          Create Your Account
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="text-center">
+        Already have an account? <a href="login.html">Login here</a>
       </div>
-      <button class="btn" type="submit">Register</button>
-    </form>
-    <div class="text-center">
-      Already have an account? <a href="login.html">Login</a>
+
+      <div class="social-register">
+        <p>Or register with</p>
+        <div class="social-icons">
+          <a href="#" class="google"><i class="fab fa-google"></i></a>
+          <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
     </div>
   </div>
+      
+  <script>
+    const form = document.getElementById("registerForm");
+    const errorAlert = document.getElementById("errorAlert");
+    const errorMessage = document.getElementById("errorMessage");
+    const successAlert = document.getElementById("successAlert");
+    const successMessage = document.getElementById("successMessage");
+
+    // Clear form fields on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (form) {
+        form.reset();
+        // For extra measure, explicitly clear each input
+        const inputs = form.querySelectorAll('input');
+        inputs.forEach(input => {
+          input.value = '';
+        });
+      }
+    });
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      // Hide any existing alerts
+      errorAlert.style.display = "none";
+      successAlert.style.display = "none";
+
+      const name = form.name.value;
+      const email = form.email.value;
+      const password = form.password.value;
+
+      // Basic validation
+      if (password.length < 6) {
+        errorAlert.style.display = "flex";
+        errorMessage.innerText = "Password must be at least 6 characters long.";
+        return;
+      }
+
+      try {
+        const response = await fetch("/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Show success message
+          successAlert.style.display = "flex";
+          successMessage.innerText = "Registration successful! Redirecting to dashboard...";
+          
+          // Store the token in localStorage
+          localStorage.setItem("token", data.access_token);
+          
+          // Redirect to dashboard after a short delay
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2000);
+        } else {
+          // Show error message
+          errorAlert.style.display = "flex";
+          errorMessage.innerText = data.detail || "Registration failed. Please try again.";
+        }
+      } catch (err) {
+        console.error("Registration error:", err);
+        errorAlert.style.display = "flex";
+        errorMessage.innerText = "Server error. Please try again later.";
+      }
+    });
+  </script>
 </body>
 </html>
