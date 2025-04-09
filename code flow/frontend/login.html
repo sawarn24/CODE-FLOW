@@ -351,13 +351,12 @@
         <p>Log in to your account to continue</p>
       </div>
 
-      <!-- Error Alert -->
+      
       <div class="alert error" id="errorAlert" style="display: none;">
         <i class="fas fa-exclamation-circle"></i>
         <span id="errorMessage">Invalid credentials. Please try again.</span>
       </div>
 
-      <!-- Login Form -->
       <form id="loginForm" autocomplete="off">
         <div class="input-group">
           <label for="email">Email Address</label>
@@ -391,11 +390,10 @@
     const alertBox = document.getElementById("errorAlert");
     const errorMessage = document.getElementById("errorMessage");
 
-    // Clear form fields on page load
+    
     document.addEventListener('DOMContentLoaded', function() {
       if (form) {
         form.reset();
-        // For extra measure, explicitly clear each input
         const inputs = form.querySelectorAll('input');
         inputs.forEach(input => {
           input.value = '';
@@ -420,16 +418,12 @@
 
         if (response.ok) {
           const data = await response.json();
-          // Store the token in localStorage
           localStorage.setItem("token", data.access_token);
-          
-          // Redirect to the dashboard page
           window.location.href = "/dashboard";
         } else {
           alertBox.style.display = "flex";
           errorMessage.innerText = "Login failed. Please check your credentials.";
           
-          // Auto-hide alert after 5 seconds
           setTimeout(() => {
             alertBox.style.display = "none";
           }, 5000);
@@ -438,7 +432,6 @@
         alertBox.style.display = "flex";
         errorMessage.innerText = "Server error. Please try again later.";
         
-        // Auto-hide alert after 5 seconds
         setTimeout(() => {
           alertBox.style.display = "none";
         }, 5000);

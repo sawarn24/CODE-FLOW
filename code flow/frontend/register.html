@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <style>
     :root {
-      --primary-color: #2ecc71;
-      --primary-dark: #27ae60;
+      --primary-color: #3498db;
+      --primary-dark: #2980b9;
       --bg-gradient-start: #74ebd5;
       --bg-gradient-end: #ACB6E5;
     }
@@ -154,7 +154,7 @@
 
     .input-group input:focus {
       border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
       background-color: #fff;
     }
 
@@ -180,6 +180,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 10px;
     }
 
     .register-btn i {
@@ -209,74 +210,6 @@
       font-weight: bold;
     }
 
-    .social-register {
-      margin-top: 30px;
-    }
-
-    .social-register p {
-      position: relative;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #777;
-      font-size: 0.9rem;
-    }
-
-    .social-register p::before,
-    .social-register p::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      height: 1px;
-      background-color: #e1e1e1;
-    }
-
-    .social-register p::before {
-      left: 0;
-    }
-
-    .social-register p::after {
-      right: 0;
-    }
-
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .social-icons a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #f5f5f5;
-      color: #333;
-      transition: all 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    }
-
-    .social-icons a.google:hover {
-      background-color: #DB4437;
-      color: white;
-    }
-
-    .social-icons a.twitter:hover {
-      background-color: #1DA1F2;
-      color: white;
-    }
-
-    .social-icons a.facebook:hover {
-      background-color: #4267B2;
-      color: white;
-    }
-
     .alert {
       text-align: center;
       padding: 12px;
@@ -299,10 +232,28 @@
       border: 1px solid #ffcdd2;
     }
 
-    .alert.success {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-      border: 1px solid #c8e6c9;
+    .password-requirements {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: -15px;
+      margin-bottom: 20px;
+      padding-left: 45px;
+    }
+
+    .password-requirements ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .password-requirements li {
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-requirements li i {
+      margin-right: 5px;
+      font-size: 0.7rem;
     }
 
     @media (max-width: 992px) {
@@ -331,84 +282,80 @@
   <div class="register-container">
     <div class="register-banner">
       <h1><i class="fas fa-bolt"></i> BrandSpark</h1>
-      <p>Join thousands of businesses creating amazing content in seconds with our AI-powered platform.</p>
+      <p>Join thousands of marketers who are transforming their content creation with our AI-powered platform.</p>
       <ul class="benefits">
-        <li><i class="fas fa-check"></i> Free account setup</li>
-        <li><i class="fas fa-check"></i> No credit card required</li>
-        <li><i class="fas fa-check"></i> Access to basic templates</li>
-        <li><i class="fas fa-check"></i> 24/7 customer support</li>
+        <li><i class="fas fa-rocket"></i> Get started in minutes</li>
+        <li><i class="fas fa-shield-alt"></i> Secure and private</li>
+        <li><i class="fas fa-sync"></i> Free updates</li>
+        <li><i class="fas fa-headset"></i> Premium support</li>
       </ul>
     </div>
     
     <div class="register-form">
       <div class="register-header">
-        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
-        <p>Get started with your free BrandSpark account</p>
+        <h2><i class="fas fa-bolt"></i> BrandSpark</h2>
+        <p>Create your account</p>
       </div>
 
-      <!-- Alert Box -->
       <div class="alert error" id="errorAlert" style="display: none;">
         <i class="fas fa-exclamation-circle"></i>
-        <span id="errorMessage">Error message will appear here.</span>
+        <span id="errorMessage"></span>
       </div>
 
-      <!-- Success Alert -->
-      <div class="alert success" id="successAlert" style="display: none;">
-        <i class="fas fa-check-circle"></i>
-        <span id="successMessage">Registration successful!</span>
-      </div>
-
-      <!-- Registration Form -->
       <form id="registerForm" autocomplete="off">
         <div class="input-group">
           <label for="name">Full Name</label>
           <i class="fas fa-user"></i>
           <input type="text" id="name" name="name" placeholder="Your full name" required autocomplete="off" />
         </div>
+        
         <div class="input-group">
           <label for="email">Email Address</label>
           <i class="fas fa-envelope"></i>
           <input type="email" id="email" name="email" placeholder="Your email address" required autocomplete="off" />
         </div>
+        
         <div class="input-group">
           <label for="password">Password</label>
           <i class="fas fa-lock"></i>
           <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password" />
         </div>
         
+        <div class="password-requirements">
+          <ul>
+            <li><i class="fas fa-check"></i> At least 8 characters</li>
+            <li><i class="fas fa-check"></i> Include numbers and special characters</li>
+          </ul>
+        </div>
+        
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required autocomplete="new-password" />
+        </div>
+        
         <button type="submit" class="register-btn">
           Create Your Account
-          <i class="fas fa-arrow-right"></i>
+          <i class="fas fa-user-plus"></i>
         </button>
       </form>
 
       <div class="text-center">
-        Already have an account? <a href="login.html">Login here</a>
-      </div>
-
-      <div class="social-register">
-        <p>Or register with</p>
-        <div class="social-icons">
-          <a href="#" class="google"><i class="fab fa-google"></i></a>
-          <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-        </div>
+        Already have an account? <a href="login.html">Log in</a>
       </div>
     </div>
   </div>
       
   <script>
     const form = document.getElementById("registerForm");
-    const errorAlert = document.getElementById("errorAlert");
+    const alertBox = document.getElementById("errorAlert");
     const errorMessage = document.getElementById("errorMessage");
-    const successAlert = document.getElementById("successAlert");
-    const successMessage = document.getElementById("successMessage");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
 
-    // Clear form fields on page load
     document.addEventListener('DOMContentLoaded', function() {
       if (form) {
         form.reset();
-        // For extra measure, explicitly clear each input
         const inputs = form.querySelectorAll('input');
         inputs.forEach(input => {
           input.value = '';
@@ -416,58 +363,88 @@
       }
     });
 
+    // Password validation function
+    function validatePassword(password) {
+      if (password.length < 8) {
+        return "Password must be at least 8 characters long";
+      }
+      
+      const hasNumber = /\d/.test(password);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      
+      if (!hasNumber || !hasSpecial) {
+        return "Password must include at least one number and one special character";
+      }
+      
+      return null; // No error
+    }
+
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
-
-      // Hide any existing alerts
-      errorAlert.style.display = "none";
-      successAlert.style.display = "none";
-
-      const name = form.name.value;
-      const email = form.email.value;
-      const password = form.password.value;
-
+      
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+      
       // Basic validation
-      if (password.length < 6) {
-        errorAlert.style.display = "flex";
-        errorMessage.innerText = "Password must be at least 6 characters long.";
+      if (name.length < 2) {
+        showError("Name must be at least 2 characters long");
+        return;
+      }
+      
+      if (!email.includes('@') || !email.includes('.')) {
+        showError("Please enter a valid email address");
+        return;
+      }
+      
+      // Password validation
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        showError(passwordError);
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showError("Passwords don't match");
         return;
       }
 
       try {
-        const response = await fetch("/register/", {
+        const response = await fetch("/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({ name, email, password })
         });
-
+        
         const data = await response.json();
-
+        
         if (response.ok) {
-          // Show success message
-          successAlert.style.display = "flex";
-          successMessage.innerText = "Registration successful! Redirecting to dashboard...";
-          
-          // Store the token in localStorage
-          localStorage.setItem("token", data.access_token);
-          
-          // Redirect to dashboard after a short delay
-          setTimeout(() => {
-            window.location.href = "/dashboard";
-          }, 2000);
+          // Registration successful - redirect to dashboard or show success message
+          if (data.access_token) {
+            localStorage.setItem("token", data.access_token);
+          }
+          window.location.href = "/dashboard";
         } else {
-          // Show error message
-          errorAlert.style.display = "flex";
-          errorMessage.innerText = data.detail || "Registration failed. Please try again.";
+          // Registration failed with a known error
+          showError(data.detail || "Registration failed. Please try again.");
         }
       } catch (err) {
-        console.error("Registration error:", err);
-        errorAlert.style.display = "flex";
-        errorMessage.innerText = "Server error. Please try again later.";
+        // Network or other error
+        showError("Server error. Please try again later.");
       }
     });
+    
+    function showError(message) {
+      errorMessage.innerText = message;
+      alertBox.style.display = "flex";
+      
+      setTimeout(() => {
+        alertBox.style.display = "none";
+      }, 5000);
+    }
   </script>
 </body>
 </html>
