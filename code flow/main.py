@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, Request, Body, Header, Form, Response
+from fastapi import FastAPI, HTTPException, Depends, Request, Body, Header, Form, Response, Cookie
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,9 +19,8 @@ def create_tables():
         cur.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                password_hash VARCHAR(255) NOT NULL
+                username VARCHAR(100) UNIQUE NOT NULL,
+                 password_hash VARCHAR(255) NOT NULL
             )
         """)
 
@@ -61,33 +60,17 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_credentials=True,
 )
 
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 templates = Jinja2Templates(directory="frontend")
 
 class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
+    username: str
+    password_hash: str
 
-class UserLogin(BaseModel):
-    email: str
-    password: str
 
-class ProjectCreate(BaseModel):
-    title: str
-    type: str
-    description: str
-    content: Optional[str] = None
-    progress: Optional[int] = 0
-
-class ProjectUpdate(BaseModel):
-    title: Optional[str] = None
-    type: Optional[str] = None
-    description: Optional[str] = None
-    content: Optional[str] = None
-    progress: Optional[int] = None
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -97,59 +80,74 @@ async def home(request: Request):
 async def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
-@app.get("/register", response_class=HTMLResponse)
-async def register_page(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+@app.post("/register/")
+def register_user(user: UserCreate):
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE username = %s", (user.username,))
+        if cur.fetchone():
+            raise HTTPException(status_code=400, detail="Username already exists")
 
-@app.post("/register", response_class=HTMLResponse)
-async def register_form(
-    request: Request,
-    response: Response,
-    user: UserCreate
-):
+        hashed = hash_password(user.password_hash)
+        cur.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s)", (user.username, hashed))
+        conn.commit()
+        return {"message": "User registered successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        raise HTTPException(status_code=500, detail="Registration failed")
+    finally:
+        if conn:
+            conn.close()
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+@app.post("/login/")
+def login(user: UserLogin):
     conn = get_db_connection()
     cur = conn.cursor()
     try:
-        cur.execute("SELECT id FROM users WHERE email = %s", (user.email,))
-        if cur.fetchone():
-            return templates.TemplateResponse("register.html", {
-                "request": request,
-                "error": "Email already registered"
-            })
+        cur.execute("SELECT id, username, password_hash FROM users WHERE username = %s", (user.username,))
+        db_user = cur.fetchone()
 
-        hashed_pw = hash_password(user.password)
-        cur.execute(
-            "INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s) RETURNING id",
-            (user.name, user.email, hashed_pw)
-        )
-        conn.commit()
+        if not db_user or not verify_password(user.password, db_user["password_hash"]):
+            raise HTTPException(status_code=400, detail="Invalid username or password")
 
-        token = create_access_token({"sub": user.email})
-        redirect_response = RedirectResponse(url="/dashboard", status_code=303)
-        redirect_response.set_cookie(key="Authorization", value=f"Bearer {token}", httponly=True)
-        return redirect_response
-    except Exception as e:
-        conn.rollback()
-        print("❌ Registration error:", e)
-        print(traceback.format_exc())
-        return templates.TemplateResponse("register.html", {
-            "request": request,
-            "error": "Registration failed. Please try again."
-        })
+        token_data = {"sub": user.username}
+        access_token = create_access_token(token_data)
+        return {"access_token": access_token, "token_type": "bearer"}
+    except Exception:
+        raise HTTPException(status_code=500, detail="Login failed")
     finally:
         cur.close()
         conn.close()
-@app.get("/dashboard", response_class=HTMLResponse)
-async def dashboard_page(request: Request, authorization: Optional[str] = Header(None)):
-    if not authorization:
-        authorization = request.cookies.get("Authorization")
 
-    user = None
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard_page(
+    request: Request, 
+    authorization: Optional[str] = Header(None),
+    authorization_cookie: Optional[str] = Cookie(None, alias="Authorization")
+):
+    # Get token from header or cookie
+    token = None
     if authorization and authorization.startswith("Bearer "):
+        token = authorization.replace("Bearer ", "")
+    elif authorization_cookie and authorization_cookie.startswith("Bearer "):
+        token = authorization_cookie.replace("Bearer ", "")
+    
+    user = None
+    if token:
         try:
-            token = authorization.replace("Bearer ", "")
             user = get_current_user(token)
-        except:
+        except Exception as e:
+            print(f"❌ Token validation error: {e}")
             pass
 
     if not user:
@@ -160,6 +158,10 @@ async def dashboard_page(request: Request, authorization: Optional[str] = Header
     try:
         cur.execute("SELECT id, name, email FROM users WHERE email = %s", (user['sub'],))
         user_details = cur.fetchone()
+        
+        if not user_details:
+            print(f"❌ User not found in database: {user['sub']}")
+            return RedirectResponse(url="/login", status_code=303)
 
         cur.execute("""
             SELECT id, title, type, created_date, description, progress 
@@ -167,7 +169,7 @@ async def dashboard_page(request: Request, authorization: Optional[str] = Header
             WHERE user_id = %s 
             ORDER BY created_date DESC 
             LIMIT 4
-        """, (user_details['id'],))
+        """, (user_details["id"],))
         user_projects = cur.fetchall()
 
         is_new_user = len(user_projects) == 0
@@ -190,7 +192,8 @@ async def dashboard_page(request: Request, authorization: Optional[str] = Header
             "platform_stats": platform_stats if is_new_user else None
         })
     except Exception as e:
-        print(traceback.format_exc())
+        print(f"❌ Dashboard error: {e}")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail="Failed to load dashboard")
     finally:
         cur.close()
